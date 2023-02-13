@@ -49,3 +49,5 @@ wheelhouse/
 # amalgamation files
 src/c4/c4core_all.hpp
 src_singleheader/
+
+zig-*

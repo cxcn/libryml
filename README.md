@@ -1,4 +1,13 @@
+This is a fork of [rapidyaml](https://github.com/biojppm/rapidyaml), packaged for Zig. Unnecessary
+files have been deleted, and the build system has been replaced with
+`build.zig`.
+
+Original README follows:
+
+---
+
 # Rapid YAML
+
 [![MIT Licensed](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/biojppm/rapidyaml/blob/master/LICENSE.txt)
 [![release](https://img.shields.io/github/v/release/biojppm/rapidyaml?color=g&include_prereleases&label=release%20&sort=semver)](https://github.com/biojppm/rapidyaml/releases)
 [![PyPI](https://img.shields.io/pypi/v/rapidyaml?color=g)](https://pypi.org/project/rapidyaml/)
@@ -6,9 +15,10 @@
 [![Gitter](https://badges.gitter.im/rapidyaml/community.svg)](https://gitter.im/rapidyaml/community)
 
 [![test](https://github.com/biojppm/rapidyaml/workflows/test/badge.svg?branch=master)](https://github.com/biojppm/rapidyaml/actions)
-<!-- [![Coveralls](https://coveralls.io/repos/github/biojppm/rapidyaml/badge.svg?branch=master)](https://coveralls.io/github/biojppm/rapidyaml) -->
-[![Codecov](https://codecov.io/gh/biojppm/rapidyaml/branch/master/graph/badge.svg?branch=master)](https://codecov.io/gh/biojppm/rapidyaml)
 
+<!-- [![Coveralls](https://coveralls.io/repos/github/biojppm/rapidyaml/badge.svg?branch=master)](https://coveralls.io/github/biojppm/rapidyaml) -->
+
+[![Codecov](https://codecov.io/gh/biojppm/rapidyaml/branch/master/graph/badge.svg?branch=master)](https://codecov.io/gh/biojppm/rapidyaml)
 
 Or ryml, for short. ryml is a C++ library to parse and emit YAML,
 and do it fast, on everything from x64 to bare-metal chips without
@@ -45,23 +55,25 @@ headers. ryml ships with [c4core](https://github.com/biojppm/c4core), a
 small C++ utilities multiplatform library.
 
 ryml is written in C++11, and compiles cleanly with:
-* Visual Studio 2015 and later
-* clang++ 3.9 and later
-* g++ 4.8 and later
-* Intel Compiler
+
+- Visual Studio 2015 and later
+- clang++ 3.9 and later
+- g++ 4.8 and later
+- Intel Compiler
 
 ryml is [extensively unit-tested in Linux, Windows and
 MacOS](https://github.com/biojppm/rapidyaml/actions). The tests cover
 x64, x86, wasm (emscripten), arm, aarch64, ppc64le and s390x
 architectures, and include analysing ryml with:
-  * valgrind
-  * clang-tidy
-  * clang sanitizers:
-    * memory
-    * address
-    * undefined behavior
-    * thread
-  * [LGTM.com](https://lgtm.com/projects/g/biojppm/rapidyaml)
+
+- valgrind
+- clang-tidy
+- clang sanitizers:
+  - memory
+  - address
+  - undefined behavior
+  - thread
+- [LGTM.com](https://lgtm.com/projects/g/biojppm/rapidyaml)
 
 ryml also [runs in
 bare-metal](https://github.com/biojppm/rapidyaml/issues/193), and
@@ -79,46 +91,46 @@ and [the roadmap](https://github.com/biojppm/rapidyaml/tree/master/ROADMAP.md).
 
 <!-- endpythonreadme -->
 
-
-------
+---
 
 ## Table of contents
-* [Is it rapid?](#is-it-rapid)
-  * [Comparison with yaml-cpp](#comparison-with-yaml-cpp)
-  * [Performance reading JSON](#performance-reading-json)
-  * [Performance emitting](#performance-emitting)
-* [Quick start](#quick-start)
-* [Using ryml in your project](#using-ryml-in-your-project)
-  * [Package managers](#package-managers)
-  * [Single header file](#single-header-file)
-  * [As a library](#as-a-library)
-  * [Quickstart samples](#quickstart-samples)
-  * [CMake build settings for ryml](#cmake-build-settings-for-ryml)
-     * [Forcing ryml to use a different c4core version](#forcing-ryml-to-use-a-different-c4core-version)
-* [Other languages](#other-languages)
-  * [JavaScript](#javascript)
-  * [Python](#python)
-* [YAML standard conformance](#yaml-standard-conformance)
-  * [Test suite status](#test-suite-status)
-* [Known limitations](#known-limitations)
-* [Alternative libraries](#alternative-libraries)
-* [License](#license)
 
+- [Is it rapid?](#is-it-rapid)
+  - [Comparison with yaml-cpp](#comparison-with-yaml-cpp)
+  - [Performance reading JSON](#performance-reading-json)
+  - [Performance emitting](#performance-emitting)
+- [Quick start](#quick-start)
+- [Using ryml in your project](#using-ryml-in-your-project)
+  - [Package managers](#package-managers)
+  - [Single header file](#single-header-file)
+  - [As a library](#as-a-library)
+  - [Quickstart samples](#quickstart-samples)
+  - [CMake build settings for ryml](#cmake-build-settings-for-ryml)
+    - [Forcing ryml to use a different c4core version](#forcing-ryml-to-use-a-different-c4core-version)
+- [Other languages](#other-languages)
+  - [JavaScript](#javascript)
+  - [Python](#python)
+- [YAML standard conformance](#yaml-standard-conformance)
+  - [Test suite status](#test-suite-status)
+- [Known limitations](#known-limitations)
+- [Alternative libraries](#alternative-libraries)
+- [License](#license)
 
-------
+---
 
 ## Is it rapid?
 
 You bet! On a i7-6800K CPU @3.40GHz:
- * ryml parses YAML at about ~150MB/s on Linux and ~100MB/s on Windows (vs2017). 
- * **ryml parses JSON at about ~450MB/s on Linux**, faster than sajson (didn't
-   try yet on Windows).
- * compared against the other existing YAML libraries for C/C++:
-   * ryml is in general between 2 and 3 times faster than [libyaml](https://github.com/yaml/libyaml)
-   * ryml is in general between 10 and 70 times faster than
-     [yaml-cpp](https://github.com/jbeder/yaml-cpp), and in some cases as
-     much as 100x and [even
-     200x](https://github.com/biojppm/c4core/pull/16#issuecomment-700972614) faster.
+
+- ryml parses YAML at about ~150MB/s on Linux and ~100MB/s on Windows (vs2017).
+- **ryml parses JSON at about ~450MB/s on Linux**, faster than sajson (didn't
+  try yet on Windows).
+- compared against the other existing YAML libraries for C/C++:
+  - ryml is in general between 2 and 3 times faster than [libyaml](https://github.com/yaml/libyaml)
+  - ryml is in general between 10 and 70 times faster than
+    [yaml-cpp](https://github.com/jbeder/yaml-cpp), and in some cases as
+    much as 100x and [even
+    200x](https://github.com/biojppm/c4core/pull/16#issuecomment-700972614) faster.
 
 [Here's the benchmark](./bm/bm_parse.cpp). Using different
 approaches within ryml (in-situ/read-only vs. with/without reuse), a YAML /
@@ -130,11 +142,10 @@ The first result set is for Windows, and is using a [appveyor.yml config
 file](./bm/cases/appveyor.yml). A comparison of these results is
 summarized on the table below:
 
-| Read rates (MB/s)            | ryml   | yamlcpp | compared     |
-|------------------------------|--------|---------|--------------|
-| appveyor / vs2017 / Release  | 101.5  | 5.3     |  20x / 5.2%  |
-| appveyor / vs2017 / Debug    |   6.4  | 0.0844  |  76x / 1.3%  |
-
+| Read rates (MB/s)           | ryml  | yamlcpp | compared   |
+| --------------------------- | ----- | ------- | ---------- |
+| appveyor / vs2017 / Release | 101.5 | 5.3     | 20x / 5.2% |
+| appveyor / vs2017 / Debug   | 6.4   | 0.0844  | 76x / 1.3% |
 
 The next set of results is taken in Linux, comparing g++ 8.2 and clang++ 7.0.1 in
 parsing a YAML buffer from a [travis.yml config
@@ -143,16 +154,16 @@ file](./bm/cases/compile_commands.json). You
 can [see the full results here](./bm/results/parse.linux.i7_6800K.md).
 Summarizing:
 
-| Read rates (MB/s)           | ryml   | yamlcpp | compared   |
-|-----------------------------|--------|---------|------------|
-| json   / clang++ / Release  | 453.5  | 15.1    |  30x / 3%  |
-| json   /     g++ / Release  | 430.5  | 16.3    |  26x / 4%  |
-| json   / clang++ / Debug    |  61.9  | 1.63    |  38x / 3%  |
-| json   /     g++ / Debug    |  72.6  | 1.53    |  47x / 2%  |
-| travis / clang++ / Release  | 131.6  | 8.08    |  16x / 6%  |
-| travis /     g++ / Release  | 176.4  | 8.23    |  21x / 5%  |
-| travis / clang++ / Debug    |  10.2  | 1.08    |   9x / 1%  |
-| travis /     g++ / Debug    |  12.5  | 1.01    |  12x / 8%  |
+| Read rates (MB/s)          | ryml  | yamlcpp | compared |
+| -------------------------- | ----- | ------- | -------- |
+| json / clang++ / Release   | 453.5 | 15.1    | 30x / 3% |
+| json / g++ / Release       | 430.5 | 16.3    | 26x / 4% |
+| json / clang++ / Debug     | 61.9  | 1.63    | 38x / 3% |
+| json / g++ / Debug         | 72.6  | 1.53    | 47x / 2% |
+| travis / clang++ / Release | 131.6 | 8.08    | 16x / 6% |
+| travis / g++ / Release     | 176.4 | 8.23    | 21x / 5% |
+| travis / clang++ / Debug   | 10.2  | 1.08    | 9x / 1%  |
+| travis / g++ / Debug       | 12.5  | 1.01    | 12x / 8% |
 
 The 450MB/s read rate for JSON puts ryml squarely in the same ballpark
 as [RapidJSON](https://github.com/Tencent/rapidjson) and other fast json
@@ -162,11 +173,10 @@ Even parsing full YAML is at ~150MB/s, which is still in that performance
 ballpark, albeit at its lower end. This is something to be proud of, as the
 YAML specification is much more complex than JSON: [23449 vs 1969 words](https://www.arp242.net/yaml-config.html#its-pretty-complex).
 
-
 ### Performance reading JSON
 
 So how does ryml compare against other JSON readers? Well, it's one of the
-fastest! 
+fastest!
 
 The benchmark is the [same as above](./bm/parse.cpp), and it is reading
 the [compile_commands.json](./bm/cases/compile_commands.json), The `_arena`
@@ -177,21 +187,21 @@ benchmark repeat.
 
 Here's what we get with g++ 8.2:
 
-| Benchmark             | Release,MB/s | Debug,MB/s  |
-|:----------------------|-------------:|------------:|
-| rapidjson_arena       |       509.9  |       43.4  |
-| rapidjson_inplace     |      1329.4  |       68.2  |
-| sajson_inplace        |       434.2  |      176.5  |
-| sajson_arena          |       430.7  |      175.6  |
-| jsoncpp_arena         |       183.6  |    ? 187.9  |
-| nlohmann_json_arena   |       115.8  |       21.5  |
-| yamlcpp_arena         |        16.6  |        1.6  |
-| libyaml_arena         |       113.9  |       35.7  |
-| libyaml_arena_reuse   |       114.6  |       35.9  |
-| ryml_arena            |       388.6  |       36.9  |
-| ryml_inplace          |       393.7  |       36.9  |
-| ryml_arena_reuse      |       446.2  |       74.6  |
-| ryml_inplace_reuse    |       457.1  |       74.9  |
+| Benchmark           | Release,MB/s | Debug,MB/s |
+| :------------------ | -----------: | ---------: |
+| rapidjson_arena     |        509.9 |       43.4 |
+| rapidjson_inplace   |       1329.4 |       68.2 |
+| sajson_inplace      |        434.2 |      176.5 |
+| sajson_arena        |        430.7 |      175.6 |
+| jsoncpp_arena       |        183.6 |    ? 187.9 |
+| nlohmann_json_arena |        115.8 |       21.5 |
+| yamlcpp_arena       |         16.6 |        1.6 |
+| libyaml_arena       |        113.9 |       35.7 |
+| libyaml_arena_reuse |        114.6 |       35.9 |
+| ryml_arena          |        388.6 |       36.9 |
+| ryml_inplace        |        393.7 |       36.9 |
+| ryml_arena_reuse    |        446.2 |       74.6 |
+| ryml_inplace_reuse  |        457.1 |       74.9 |
 
 You can verify that (at least for this test) ryml beats most json
 parsers at their own game, with the only exception of
@@ -201,7 +211,6 @@ than ryml, and [sajson](https://github.com/chadaustin/sajson)
 manages to be faster (but not sure about jsoncpp; need to scrutinize there
 the suspicious fact that the Debug result is faster than the Release result).
 
-
 ### Performance emitting
 
 [Emitting benchmarks](bm/bm_emit.cpp) also show similar speedups from
@@ -210,7 +219,6 @@ here's a user reporting 25x speedup from
 yaml-cpp)](https://github.com/biojppm/rapidyaml/issues/28#issue-553855608). Also, in
 some cases (eg, block folded multiline scalars), the speedup is as
 high as 200x (eg, 7.3MB/s -> 1.416MG/s).
-
 
 ### CI results and request for files
 
@@ -224,8 +232,7 @@ Also, if you have a case where ryml behaves very nicely or not as nicely as
 claimed above, we would definitely like to see it! Please submit a pull request
 adding the file to [bm/cases](bm/cases), or just send us the files.
 
-
-------
+---
 
 ## Quick start
 
@@ -722,8 +729,7 @@ sample_static_trees();         ///< how to use static trees in ryml
 sample_location_tracking();    ///< track node locations in the parsed source tree
 ```
 
-
-------
+---
 
 ## Using ryml in your project
 
@@ -731,12 +737,13 @@ sample_location_tracking();    ///< track node locations in the parsed source tr
 
 If you opt for package managers, here's where ryml is available so far
 (thanks to all the contributors!):
-  * [vcpkg](https://vcpkg.io/en/packages.html): `vcpkg install ryml`
-  * Arch Linux/Manjaro:
-    * [rapidyaml-git (AUR)](https://aur.archlinux.org/packages/rapidyaml-git/)
-    * [python-rapidyaml-git (AUR)](https://aur.archlinux.org/packages/python-rapidyaml-git/)
-  * [Fedora Linux](https://getfedora.org/)/[EPEL](https://docs.fedoraproject.org/en-US/epel/): `dnf install rapidyaml-devel`, `dnf install python3-rapidyaml`
-  * [PyPI](https://pypi.org/project/rapidyaml/)
+
+- [vcpkg](https://vcpkg.io/en/packages.html): `vcpkg install ryml`
+- Arch Linux/Manjaro:
+  - [rapidyaml-git (AUR)](https://aur.archlinux.org/packages/rapidyaml-git/)
+  - [python-rapidyaml-git (AUR)](https://aur.archlinux.org/packages/python-rapidyaml-git/)
+- [Fedora Linux](https://getfedora.org/)/[EPEL](https://docs.fedoraproject.org/en-US/epel/): `dnf install rapidyaml-devel`, `dnf install python3-rapidyaml`
+- [PyPI](https://pypi.org/project/rapidyaml/)
 
 Although package managers are very useful for quickly getting up to
 speed, the advised way is still to bring ryml as a submodule of your
@@ -745,6 +752,7 @@ upstream changes in ryml. Also, ryml is small and quick to build, so
 there's not much of a cost for building it with your project.
 
 ### Single header file
+
 ryml is provided chiefly as a cmake library project, but it can also
 be used as a single header file, and there is a [tool to
 amalgamate](./tools/amalgamate.py) the code into a single header
@@ -775,6 +783,7 @@ in any header or source file in the project, but in one source file,
 and only in that one source file, `#define` the macro
 `RYML_SINGLE_HDR_DEFINE_NOW` **before including the header**. This
 will enable the function definitions. For example:
+
 ```c++
 // foo.h
 #include <ryml_all.hpp>
@@ -789,8 +798,8 @@ If you wish to package the single header into a shared library, then
 you will need to define the preprocessor symbol `RYML_SHARED` during
 compilation.
 
-
 ### As a library
+
 The single header file is a good approach to quickly try the library,
 but if you wish to make good use of CMake and its tooling ecosystem,
 (and get better compile times), then ryml has you covered.
@@ -805,9 +814,11 @@ recommend a recent cmake version, at least 3.13.
 
 Note that ryml uses submodules. Take care to use the `--recursive` flag
 when cloning the repo, to ensure ryml's submodules are checked out as well:
+
 ```bash
 git clone --recursive https://github.com/biojppm/rapidyaml
 ```
+
 If you omit `--recursive`, after cloning you
 will have to do `git submodule update --init --recursive`
 to ensure ryml's submodules are checked out.
@@ -828,35 +839,37 @@ script and runs in Linux and MacOS, but it is also possible to run in
 Windows via Git Bash or the WSL). Click on the links below to find out
 more about each sample:
 
-| Sample name        | ryml is part of build?   | cmake file   | commands     |
-|:-------------------|--------------------------|:-------------|:-------------|
-| [`singleheader`](./samples/singleheader) | **yes**<br>ryml brought as a single header file,<br>not as a library | [`CMakeLists.txt`](./samples/singleheader/CMakeLists.txt) | [`run.sh`](./samples/singleheader/run.sh) |
-| [`singleheaderlib`](./samples/singleheaderlib) | **yes**<br>ryml brought as a library<br>but from the single header file | [`CMakeLists.txt`](./samples/singleheaderlib/CMakeLists.txt) | [`run_shared.sh` (shared library)](./samples/singleheaderlib/run_shared.sh)<br> [`run_static.sh` (static library)](./samples/singleheaderlib/run_static.sh) |
-| [`add_subdirectory`](./samples/add_subdirectory) | **yes**                      | [`CMakeLists.txt`](./samples/add_subdirectory/CMakeLists.txt) | [`run.sh`](./samples/add_subdirectory/run.sh) |
-| [`fetch_content`](./samples/fetch_content)      | **yes**                      | [`CMakeLists.txt`](./samples/fetch_content/CMakeLists.txt) | [`run.sh`](./samples/fetch_content/run.sh) |
-| [`find_package`](./samples/find_package)        | **no**<br>needs prior install or package  | [`CMakeLists.txt`](./samples/find_package/CMakeLists.txt) | [`run.sh`](./samples/find_package/run.sh) |
+| Sample name                                      | ryml is part of build?                                                  | cmake file                                                    | commands                                                                                                                                                    |
+| :----------------------------------------------- | ----------------------------------------------------------------------- | :------------------------------------------------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`singleheader`](./samples/singleheader)         | **yes**<br>ryml brought as a single header file,<br>not as a library    | [`CMakeLists.txt`](./samples/singleheader/CMakeLists.txt)     | [`run.sh`](./samples/singleheader/run.sh)                                                                                                                   |
+| [`singleheaderlib`](./samples/singleheaderlib)   | **yes**<br>ryml brought as a library<br>but from the single header file | [`CMakeLists.txt`](./samples/singleheaderlib/CMakeLists.txt)  | [`run_shared.sh` (shared library)](./samples/singleheaderlib/run_shared.sh)<br> [`run_static.sh` (static library)](./samples/singleheaderlib/run_static.sh) |
+| [`add_subdirectory`](./samples/add_subdirectory) | **yes**                                                                 | [`CMakeLists.txt`](./samples/add_subdirectory/CMakeLists.txt) | [`run.sh`](./samples/add_subdirectory/run.sh)                                                                                                               |
+| [`fetch_content`](./samples/fetch_content)       | **yes**                                                                 | [`CMakeLists.txt`](./samples/fetch_content/CMakeLists.txt)    | [`run.sh`](./samples/fetch_content/run.sh)                                                                                                                  |
+| [`find_package`](./samples/find_package)         | **no**<br>needs prior install or package                                | [`CMakeLists.txt`](./samples/find_package/CMakeLists.txt)     | [`run.sh`](./samples/find_package/run.sh)                                                                                                                   |
 
 ### CMake build settings for ryml
+
 The following cmake variables can be used to control the build behavior of
 ryml:
 
-  * `RYML_WITH_TAB_TOKENS=ON/OFF`. Enable/disable support for tabs as
-    valid container tokens after `:` and `-`. Defaults to `OFF`,
-    because this may cost up to 10% in processing time.
-  * `RYML_DEFAULT_CALLBACKS=ON/OFF`. Enable/disable ryml's default
-    implementation of error and allocation callbacks. Defaults to `ON`.
-  * `RYML_STANDALONE=ON/OFF`. ryml uses
-    [c4core](https://github.com/biojppm/c4core), a C++ library with low-level
-    multi-platform utilities for C++. When `RYML_STANDALONE=ON`, c4core is
-    incorporated into ryml as if it is the same library. Defaults to `ON`.
+- `RYML_WITH_TAB_TOKENS=ON/OFF`. Enable/disable support for tabs as
+  valid container tokens after `:` and `-`. Defaults to `OFF`,
+  because this may cost up to 10% in processing time.
+- `RYML_DEFAULT_CALLBACKS=ON/OFF`. Enable/disable ryml's default
+  implementation of error and allocation callbacks. Defaults to `ON`.
+- `RYML_STANDALONE=ON/OFF`. ryml uses
+  [c4core](https://github.com/biojppm/c4core), a C++ library with low-level
+  multi-platform utilities for C++. When `RYML_STANDALONE=ON`, c4core is
+  incorporated into ryml as if it is the same library. Defaults to `ON`.
 
 If you're developing ryml or just debugging problems with ryml itself, the
 following cmake variables can be helpful:
-  * `RYML_DEV=ON/OFF`: a bool variable which enables development targets such as
-    unit tests, benchmarks, etc. Defaults to `OFF`.
-  * `RYML_DBG=ON/OFF`: a bool variable which enables verbose prints from
-    parsing code; can be useful to figure out parsing problems. Defaults to
-    `OFF`.
+
+- `RYML_DEV=ON/OFF`: a bool variable which enables development targets such as
+  unit tests, benchmarks, etc. Defaults to `OFF`.
+- `RYML_DBG=ON/OFF`: a bool variable which enables verbose prints from
+  parsing code; can be useful to figure out parsing problems. Defaults to
+  `OFF`.
 
 #### Forcing ryml to use a different c4core version
 
@@ -867,8 +880,7 @@ possible to use a c4core version different from the one in the repo
 versions). You can find out how to achieve this by looking at the
 [`custom_c4core` sample](./samples/custom_c4core/CMakeLists.txt).
 
-
-------
+---
 
 ## Other languages
 
@@ -882,7 +894,6 @@ follow (all of this is possible because we're using
 ### JavaScript
 
 A JavaScript+WebAssembly port is available, compiled through [emscripten](https://emscripten.org/).
-
 
 ### Python
 
@@ -933,7 +944,7 @@ def check(tree):
     k = tree.get_key(5)
     print(k)  # '<memory at 0x7f80d5b93f48>'
     assert k == b"seq"               # ok, as expected
-    assert k != "seq"                # not ok - NOTE THIS! 
+    assert k != "seq"                # not ok - NOTE THIS!
     assert str(k) != "seq"           # not ok
     assert str(k, "utf8") == "seq"   # ok again
 
@@ -947,11 +958,13 @@ mutable = bytearray(src)
 tree = ryml.parse_in_place(mutable)
 check(tree) # OK
 ```
+
 As expected, the performance results so far are encouraging. In
 a [timeit benchmark](api/python/parse_bm.py) compared
 against [PyYaml](https://pyyaml.org/)
 and [ruamel.yaml](https://yaml.readthedocs.io/en/latest/), ryml parses
 quicker by generally 100x and up to 400x:
+
 ```
 +----------------------------------------+-------+----------+----------+-----------+
 | style_seqs_blck_outer1000_inner100.yml | count | time(ms) | avg(ms)  | avg(MB/s) |
@@ -964,12 +977,14 @@ quicker by generally 100x and up to 400x:
 | parse:RymlParseInPlaceReuse            |    38 |  462.932 |   12.182 |    64.765 |
 +----------------------------------------+-------+----------+----------+-----------+
 ```
+
 (Note that the parse timings above are somewhat biased towards ryml, because
 it does not perform any type conversions in Python-land: return types
 are merely `memoryviews` to the source buffer, possibly copied to the tree's
 arena).
 
 As for emitting, the improvement can be as high as 3000x:
+
 ```
 +----------------------------------------+-------+-----------+-----------+-----------+
 | style_maps_blck_outer1000_inner100.yml | count |  time(ms) |  avg(ms)  | avg(MB/s) |
@@ -981,8 +996,7 @@ As for emitting, the improvement can be as high as 3000x:
 +----------------------------------------+-------+-----------+-----------+-----------+
 ```
 
-
-------
+---
 
 ## YAML standard conformance
 
@@ -997,20 +1011,19 @@ welcome.
 
 See also [the roadmap](./ROADMAP.md) for a list of future work.
 
-
 ### Known limitations
 
 ryml deliberately makes no effort to follow the standard in the
 following situations:
 
-* Containers are not accepted as mapping keys: keys must be scalars.
-* Tab characters after `:` and `-` are not accepted tokens, unless
+- Containers are not accepted as mapping keys: keys must be scalars.
+- Tab characters after `:` and `-` are not accepted tokens, unless
   ryml is compiled with the macro `RYML_WITH_TAB_TOKENS`. This
   requirement exists because checking for tabs introduces branching
   into the parser's hot code and in some cases costs as much as 10%
   in parsing time.
-* Anchor names must not end with a terminating colon: eg `&anchor: key: val`.
-* Non-unique map keys are allowed. Enforcing key uniqueness in the
+- Anchor names must not end with a terminating colon: eg `&anchor: key: val`.
+- Non-unique map keys are allowed. Enforcing key uniqueness in the
   parser or in the tree would cause log-linear parsing complexity (for
   root children on a mostly flat tree), and would increase code size
   through added structural, logical and cyclomatic complexity. So
@@ -1021,8 +1034,8 @@ following situations:
   doing a post-parse walk through the tree. So choosing to not enforce
   key uniqueness adheres to the spirit of "don't pay for what you
   don't use".
-* `%YAML` directives have no effect and are ignored.
-* `%TAG` directives are limited to a default maximum of 4 instances
+- `%YAML` directives have no effect and are ignored.
+- `%TAG` directives are limited to a default maximum of 4 instances
   per `Tree`. To increase this maximum, define the preprocessor symbol
   `RYML_MAX_TAG_DIRECTIVES` to a suitable value. This arbitrary limit
   reflects the usual practice of having at most 1 or 2 tag directives;
@@ -1048,18 +1061,18 @@ with ryml, please [open an
 issue](https://github.com/biojppm/rapidyaml/issues) so that we can
 improve.
 
-
 ### Test suite status
 
 As part of its CI testing, ryml uses the [YAML test
 suite](https://github.com/yaml/yaml-test-suite). This is an extensive
 set of reference cases covering the full YAML spec. Each of these
 cases have several subparts:
- * `in-yaml`: mildly, plainly or extremely difficult-to-parse YAML
- * `in-json`: equivalent JSON (where possible/meaningful)
- * `out-yaml`: equivalent standard YAML
- * `emit-yaml`: equivalent standard YAML
- * `events`: reference results (ie, expected tree)
+
+- `in-yaml`: mildly, plainly or extremely difficult-to-parse YAML
+- `in-json`: equivalent JSON (where possible/meaningful)
+- `out-yaml`: equivalent standard YAML
+- `emit-yaml`: equivalent standard YAML
+- `events`: reference results (ie, expected tree)
 
 When testing, ryml parses each of the 4 yaml/json parts, then emits
 the parsed tree, then parses the emitted result and verifies that
@@ -1080,8 +1093,8 @@ unit tests in ryml, which also employ the same extensive
 combinatorial approach.
 
 Also, note that in [their own words](http://matrix.yaml.io/), the
-tests from the YAML test suite *contain a lot of edge cases that don't
-play such an important role in real world examples*. And yet, despite
+tests from the YAML test suite _contain a lot of edge cases that don't
+play such an important role in real world examples_. And yet, despite
 the extreme focus of the test suite, currently ryml only fails a minor
 fraction of the test cases, mostly related with the deliberate
 limitations noted above. Other than those limitations, by far the main
@@ -1091,8 +1104,7 @@ test-suite, refer to the [list of known
 exceptions](test/test_suite/test_suite_parts.cpp) from ryml's test
 suite runner, which is used as part of ryml's CI process.
 
-
-------
+---
 
 ## Alternative libraries
 
@@ -1100,20 +1112,20 @@ Why this library? Because none of the existing libraries was quite
 what I wanted. When I started this project in 2018, I was aware of these two
 alternative C/C++ libraries:
 
-  * [libyaml](https://github.com/yaml/libyaml). This is a bare C
-    library. It does not create a representation of the data tree, so
-    I don't see it as practical. My initial idea was to wrap parsing
-    and emitting around libyaml's convenient event handling, but to my
-    surprise I found out it makes heavy use of allocations and string
-    duplications when parsing. I briefly pondered on sending PRs to
-    reduce these allocation needs, but not having a permanent tree to
-    store the parsed data was too much of a downside.
-  * [yaml-cpp](https://github.com/jbeder/yaml-cpp). This library may
-    be full of functionality, but is heavy on the use of
-    node-pointer-based structures like `std::map`, allocations, string
-    copies, polymorphism and slow C++ stream serializations. This is
-    generally a sure way of making your code slower, and strong
-    evidence of this can be seen in the benchmark results above.
+- [libyaml](https://github.com/yaml/libyaml). This is a bare C
+  library. It does not create a representation of the data tree, so
+  I don't see it as practical. My initial idea was to wrap parsing
+  and emitting around libyaml's convenient event handling, but to my
+  surprise I found out it makes heavy use of allocations and string
+  duplications when parsing. I briefly pondered on sending PRs to
+  reduce these allocation needs, but not having a permanent tree to
+  store the parsed data was too much of a downside.
+- [yaml-cpp](https://github.com/jbeder/yaml-cpp). This library may
+  be full of functionality, but is heavy on the use of
+  node-pointer-based structures like `std::map`, allocations, string
+  copies, polymorphism and slow C++ stream serializations. This is
+  generally a sure way of making your code slower, and strong
+  evidence of this can be seen in the benchmark results above.
 
 Recently [libfyaml](https://github.com/pantoniou/libfyaml)
 appeared. This is a newer C library, fully conformant to the YAML
@@ -1130,8 +1142,8 @@ takes inspiration from
 [RapidJSON](https://github.com/Tencent/rapidjson) and
 [RapidXML](http://rapidxml.sourceforge.net/).
 
-------
+---
+
 ## License
 
 ryml is permissively licensed under the [MIT license](LICENSE.txt).
- 
