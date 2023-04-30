@@ -23,6 +23,7 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
+    c4core.linkLibCpp();
     c4core.addIncludePath("ext/c4core/src");
     c4core.addCSourceFiles(&.{
         "ext/c4core/src/c4/base64.cpp",
@@ -34,9 +35,6 @@ pub fn build(b: *std.Build) void {
         "ext/c4core/src/c4/memory_util.cpp",
         "ext/c4core/src/c4/utf.cpp",
     }, &.{});
-    c4core.linkLibCpp();
-    c4core.install();
-    c4core.installHeadersDirectory("ext/c4core/src/c4","c4");
 
     const lib = b.addStaticLibrary(.{
         .name = "ryml",
@@ -46,8 +44,8 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
-
-    lib.addObjectFile("zig-out/lib/libc4core.a");
+    lib.linkLibCpp();
+    lib.linkLibrary(c4core);
     lib.addIncludePath("src");
     lib.addIncludePath("ext/c4core/src");
     lib.addCSourceFiles(&.{
@@ -56,24 +54,11 @@ pub fn build(b: *std.Build) void {
         "src/c4/yml/preprocess.cpp",
         "src/c4/yml/tree.cpp",
     }, &.{});
-    lib.linkLibCpp();
-
-    // This declares intent for the library to be installed into the standard
-    // location when the user invokes the "install" step (the default step when
-    // running `zig build`).
-    lib.install();
-    lib.installHeadersDirectory("src","ryml");
-
-    // Creates a step for unit testing.
-    // const main_tests = b.addTest(.{
-    //     .root_source_file = .{ .path = "src/main.zig" },
-    //     .target = target,
-    //     .optimize = optimize,
-    // });
-
-    // // This creates a build step. It will be visible in the `zig build --help` menu,
-    // // and can be selected like this: `zig build test`
-    // // This will evaluate the `test` step rather than the default, which is "install".
-    // const test_step = b.step("test", "Run library tests");
-    // test_step.dependOn(&main_tests.step);
+    lib.installHeadersDirectoryOptions(.{
+        .source_dir = "src",
+        .install_dir = .header,
+        .install_subdir = "ryml",
+        .exclude_extensions = &.{"cpp"},
+    });
+    b.installArtifact(lib);
 }
